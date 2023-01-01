@@ -18,7 +18,8 @@ def home():
         entry_content = request.form.get("content")
         formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
         # app.db.entries.insert_one({"content": entry_content, "date": formatted_date})
-        entries.append({"content": entry_content, "date": formatted_date})
+        if len(entries) < 5:
+            entries.append({"content": entry_content, "date": formatted_date})
         
     entries_with_date = [
             (
