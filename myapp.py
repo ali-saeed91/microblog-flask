@@ -10,18 +10,18 @@ load_dotenv()
 app = Flask(__name__)
 client = MongoClient(os.environ.get("MONGODB_URI"))
 app.db = client.microblog
-entries=[]
+# entries=[]
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
         entry_content = request.form.get("content")
         formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
-        # app.db.entries.insert_one({"content": entry_content, "date": formatted_date})
-        if len(entries) > 5:
-           while len(entries) !=0: 
-                entries.pop()
-        entries.append({"content": entry_content, "date": formatted_date})
+        app.db.entries.insert_one({"content": entry_content, "date": formatted_date})
+        # if len(entries) > 5:
+        #    while len(entries) !=0: 
+        #         entries.pop()
+        # entries.append({"content": entry_content, "date": formatted_date})
         
     entries_with_date = [
             (
@@ -29,8 +29,8 @@ def home():
                 entry["date"],
                 datetime.datetime.strptime(entry["date"], "%Y-%m-%d").strftime("%b %d")
             )
-            # for entry in app.db.entries.find({})
-            for entry in entries
+            for entry in app.db.entries.find({})
+            # for entry in entries
         ]
     return render_template("home.html", entries=entries_with_date)
     
