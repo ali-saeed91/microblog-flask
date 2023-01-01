@@ -19,7 +19,8 @@ def home():
         formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
         # app.db.entries.insert_one({"content": entry_content, "date": formatted_date})
         if len(entries) > 5:
-            entries.pop()
+           while len(entries) !=0: 
+                entries.pop()
         entries.append({"content": entry_content, "date": formatted_date})
         
     entries_with_date = [
