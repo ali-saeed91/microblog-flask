@@ -29,8 +29,7 @@ def home():
             # for entry in app.db.entries.find({})
             for entry in entries
         ]
-    if len(entries) > 5:
-        entries=[]
+    
     return render_template("home.html", entries=entries_with_date)
     
     # return app
