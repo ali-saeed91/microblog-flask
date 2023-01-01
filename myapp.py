@@ -29,7 +29,6 @@ def home():
             # for entry in app.db.entries.find({})
             for entry in entries
         ]
-    
     return render_template("home.html", entries=entries_with_date)
     
     # return app
