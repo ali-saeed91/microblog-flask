@@ -1,5 +1,7 @@
 import os
+import sys
 import datetime
+from tkinter import *
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -29,6 +31,21 @@ def home():
             # for entry in app.db.entries.find({})
             for entry in entries
         ]
+    if len(entries) > 5:
+        entries=[]
+         # Initialising Popup prompt for Error
+        root = Tk()
+        root.geometry("300x200")
+        
+        w = Label(root, text ='MAX Limit Reached', font = "90",fg="Navyblue") 
+        w.pack()
+            
+        msg = Message( root, text = "Refreshing Database")  
+            
+        msg.pack()  
+        
+        root.mainloop() 
+        sys.exit()
     return render_template("home.html", entries=entries_with_date)
     
     # return app
